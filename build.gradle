@@ -8,7 +8,7 @@ buildscript {
 		}
 	}
 	dependencies {
-		classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+		classpath 'net.minecraftforge.gradle:ForgeGradle:2+'
 	}
 }
 
@@ -75,11 +75,18 @@ task signJar(type: SignJar, dependsOn: reobfJar) {
 	}
 }
 
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'deobf'
+}
+
 build.dependsOn signJar
 
 // Tell the artifact system about our extra jars
 artifacts {
 	archives srcJar
+        archives deobfJar
+	archives jar
 }
 
 // Configure an upload task.
